@@ -1,0 +1,240 @@
+
+<!DOCTYPE HTML>  
+<html>
+<head>
+	<style type="text/css">
+.data_form{
+	border:1px solid #000;
+	justify-content: center;
+	width:625px;
+	margin: auto;
+}
+
+p{
+	font-size:20px;
+	font-weight:bold;	
+}
+
+.txtb{
+	padding-bottom:15px;
+	justify-content: center;
+}
+
+.txtb input{
+	margin-left: 14px;
+	width:570px;
+	font-size:16px;
+	padding:10px;
+}
+.butt input{
+	margin-left: 14px;
+	margin-bottom: 20px;
+	width:592px;
+	font-size:16px;
+	padding:10px;
+}
+.table{
+	justify-content: center;
+	width:700px;
+	margin: auto;
+	margin-top: 20px;
+}
+table{
+width:100%;
+text-align: center;
+}
+
+	
+</style>
+</head>
+<body>
+	
+<div class="data_form">
+<p style="text-align:center";>Student Grade Calculator</p>
+	<form  name="inputForm" method="post" id="form1">
+		<div class="txtb">
+			<input type="text" name="stuid" id="stuid" placeholder="Enter Student ID (Format: ST-00100)" >
+		</div>
+		
+		<div class="txtb">
+			<input type="text" name="maths" id="maths" placeholder="Enter Maths Mark" >
+		</div>
+		<div class="txtb">
+			<input type="text" name="english" id="english" placeholder="Enter English Mark" >
+		</div>
+		<div class="txtb">
+			<input type="text" name="science" id="science" placeholder="Enter Science Mark" >
+		</div>
+		<div class="butt">
+			<input type="button" name="submit" id="submit" value="Enter" onclick="start()">
+		</div>
+	</form>
+</div>
+<p style="text-align:center";>Student Result</p>
+<div class="table">
+		<table id="tab" border="1">
+			<thead>
+				<tr>
+				  <th>Student No.</th>
+				  <th>Mathematics</th>
+				  <th>English</th>
+				  <th>Science</th>
+				  <th>Total</th>
+				  <th>Average</th>
+				  <th>Grade</th>
+				</tr>
+			</thead>
+		</table>
+</div>
+<script>
+	var list1 = [];
+	var list2 = [];
+	var list3 = [];
+	var list4 = [];
+	var list5 = [];
+	var list6 = [];
+	var list7 = [];
+
+	var n = 1;
+	var z = 0;
+	var req=0;
+	var num=0;
+	var id=0;
+
+	function start(){
+		insertInp();
+		input_req();
+		idVal();
+		input_num();
+		if(req!=0&&num!=0&&id!=0){
+			AddRow();
+			clear_field();
+		}
+		
+	}
+
+	function insertInp(){
+		list1[z] = document.getElementById("stuid").value;
+		list2[z] = document.getElementById("maths").value;
+		list3[z] = document.getElementById("english").value;
+		list4[z] = document.getElementById("science").value;
+		
+	}
+	function input_req(){
+		var x=0;
+		if(list1[z]==""){
+			alert("Student ID is a required field.");
+			x++;
+		}
+		if(list2[z]==""){
+			alert("Maths marks is a required field.");
+			x++;
+		}
+		if(list3[z]==""){
+			alert("English marks is a required field.");
+			x++;
+		}
+		if(list4[z]==""){
+			alert("Science marks is a required field.");
+			x++;
+		}
+		if(x>0){
+			req=0;
+		}else{
+			req=1;
+		}
+	}
+
+	function idVal(){
+		var x =0;
+		if (!(/-/.test(list1[z]))) {
+			alert("Invalid Student ID.");
+	    	x++;
+	  	}
+	  	if ((list1[z].length)!=8) {
+			alert("Invalid Student ID.");
+	    	x++;
+	    }
+	    if(x>0){
+			id=0;
+		}else{
+			id=1;
+		}
+	}
+	function input_num(){
+		var x=0;
+		if (isNaN(list2[z]) || list2[z] < 0 || list2[z] > 100) {
+	    	alert("Sorry, Maths marks must be a Number between 0 and 100.");
+	    	x++;
+	  	}
+	  	if (isNaN(list3[z]) || list3[z] < 0 || list3[z] > 100) {
+	    	alert("Sorry, English marks must be a Number between 0 and 100.");
+	    	x++;
+	  	}
+	  	if (isNaN(list4[z]) || list4[z] < 0 || list4[z] > 100) {
+	    	alert("Sorry, Science marks must be a Number between 0 and 100.");
+	    	x++;
+	  	}
+	  	if(x>0){
+			num=0;
+		}else{
+			num=1;
+		}
+	}
+	function AddRow(){
+
+			var AddRown = document.getElementById('tab');
+			var NewRow = AddRown.insertRow(n);;
+
+			var a1=list2[z];
+			var a2=list3[z];
+			var a3=list4[z];
+
+			var x1 = parseFloat(a1);
+			var x2 = parseFloat(a2);
+			var x3 = parseFloat(a3);
+
+			list5[z]=x1+x2+x3;
+			list6[z]=list5[z]/3;
+			if(list6[z]>=75){
+				list7[z]="A";
+			}else if(list6[z]>65){
+				list7[z]="B";
+			}else if(list6[z]>55){
+				list7[z]="C";
+			}else if(list6[z]>40){
+				list7[z]="S";
+			}else{
+				list7[z]="F";
+			}		
+
+			var cel1 = NewRow.insertCell(0);
+			var cel2 = NewRow.insertCell(1);
+			var cel3 = NewRow.insertCell(2);
+			var cel4 = NewRow.insertCell(3);
+			var cel5 = NewRow.insertCell(4);
+			var cel6 = NewRow.insertCell(5);
+			var cel7 = NewRow.insertCell(6);
+
+			cel1.innerHTML = list1[z];
+			cel2.innerHTML = list2[z];
+			cel3.innerHTML = list3[z];
+			cel4.innerHTML = list4[z];
+			cel5.innerHTML = list5[z];
+			cel6.innerHTML = Math.round(list6[z]);
+			cel7.innerHTML = list7[z];
+
+			n++;
+			z++;
+			
+	}
+	function clear_field(){
+		document.getElementById("stuid").value = "";
+		document.getElementById("maths").value = "";
+		document.getElementById("english").value = "";
+		document.getElementById("science").value = "";
+	}	
+</script>
+
+</body>
+</html>
